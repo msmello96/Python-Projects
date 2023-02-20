@@ -1,0 +1,2 @@
+Morango|10|Frutas|452
+Melancia|29|Frutas|275

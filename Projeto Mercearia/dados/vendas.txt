@@ -1,0 +1,3 @@
+Morango|10|Frutas|Marcelo|Maisa|15|20/02/2023
+Melancia|29|Frutas|Marcelo|Maria Luiza|24|20/02/2023
+Morango|10|Frutas|Marcelo|Fernando|33|20/02/2023
