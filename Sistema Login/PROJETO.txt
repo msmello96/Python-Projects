@@ -1,0 +1,16 @@
+Sistema de Login
+
+-> Cadastro
+- Nome
+- Email
+- Senha
+
+-> Login
+- Email
+- Senha
+
+-> Python
+-> POO
+-> MVC
+-> Banco de Dados
+-> ORM (SQL Alchemy)
