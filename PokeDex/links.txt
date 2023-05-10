@@ -1,0 +1,8 @@
+PokeApi:
+https://pokeapi.co/
+
+Bootstrap 4:
+https://getbootstrap.com/docs/4.6/getting-started/introduction/
+
+AJAX:
+https://developers.google.com/speed/libraries?hl=pt-br
