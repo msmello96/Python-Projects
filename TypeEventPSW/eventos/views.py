@@ -168,3 +168,4 @@ def procurar_certificado(request, id):
 def meus_eventos(request):
     eventos = Evento.objects.filter(criador=request.user)
     return render(request, 'meus_eventos.html', {'eventos': eventos})
+
