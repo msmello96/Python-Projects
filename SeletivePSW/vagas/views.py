@@ -49,7 +49,19 @@ def vaga(request, id):
     tarefas = Tarefa.objects.filter(vaga=vaga).filter(realizada=False)
     emails = Emails.objects.filter(vaga=vaga)
     empresas = Empresa.objects.all()
-    return render(request, 'vaga.html', {'vaga': vaga, 'vagas': vagas, 'tarefas': tarefas, 'emails': emails, 'empresas': empresas})
+
+    tecnologias_dominadas = vaga.tecnologias_dominadas.get_queryset()
+    tecnologias_estudar = vaga.tecnologias_estudar.get_queryset()
+
+    
+
+    return render(request, 'vaga.html', {'vaga': vaga, 
+                                         'vagas': vagas, 
+                                         'tarefas': tarefas, 
+                                         'emails': emails, 
+                                         'empresas': empresas,
+                                         'tecnologias_dominadas': tecnologias_dominadas,
+                                         'tecnologias_estudar': tecnologias_estudar})
 
 def nova_tarefa(request, id_vaga):
     titulo = request.POST.get('titulo')
