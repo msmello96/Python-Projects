@@ -8,12 +8,17 @@
     <hr style="border-color: #7E7B7C">
 
     <div style="text-align: center;">
+        <label>Login: </label>
+        <a href="{% url 'login' %}" type="submit" class="btn-principal" style="text-decoration: none;">Login</a>
+        <br> 
+        <br>
         <label>Cadastro:</label>
         <a href="{% url 'cadastro' %}" type="submit" class="btn-principal" style="text-decoration: none;">Cadastro</a>
         <br>    
-        <br> 
-        <label>Login: </label>
-        <a href="{% url 'login' %}" type="submit" class="btn-principal" style="text-decoration: none;">Login</a>
+        <br>  
+        {% if user.is_authenticated %}
+        <label>Logout: </label>
+        <a href="{% url 'logout' %}" type="submit" class="btn-principal" style="text-decoration: none;">Logout</a>
         <br> 
         <br> 
         <label>Novo Evento: </label>
@@ -24,5 +29,6 @@
         <a href="{% url 'gerenciar_evento' %}" type="submit" class="btn-principal" style="text-decoration: none;">Gerenciar Evento</a>
         <br>
         <br>
+        {% endif %}
     </div>
 </div>

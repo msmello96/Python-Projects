@@ -13,9 +13,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-5 bg-side">
-                    <div class='header'>
-                        <img src="{% static 'usuarios/img/logo_adote.png' %}" width="9%"><span class="font-logo">ADO.TE</span>
-                    </div>
+                    <a href="{% url 'home' %}">
+                        <img src="{% static 'usuarios/img/logo_adote.png' %}" width="25%">
+                    </a>
+                        <span class="font-logo">ADO.TE</span>
+
 
                     <div class="body-form">
                         {% if messages %}

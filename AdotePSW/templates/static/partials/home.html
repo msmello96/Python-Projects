@@ -1,42 +1,46 @@
 {% load static %}
 
 <div class='header'>
-    <img src="{% static 'usuarios/img/logo_adote.png' %}" width="25%"><span class="font-logo">ADO.TE</span>
+    <a href="{% url 'home' %}">
+    <img src="{% static 'usuarios/img/logo_adote.png' %}" width="25%"></a>
+    <span class="font-logo">ADO.TE</span>
 </div>
 <br>
 <div>
-    
+    <a href="{% url 'login' %}" type="submit" class="btn-principal" style="text-decoration: none;">Login</a>
+    <br> 
+    {% if user.is_authenticated == False %}
     <a href="{% url 'cadastro' %}" type="submit" class="btn-principal" style="text-decoration: none;">Cadastro</a>
     <br>
-    
-    <a href="{% url 'login' %}" type="submit" class="btn-principal" style="text-decoration: none;">Login</a>
-    <br>  
-    
-    <a href="{% url 'sair' %}" type="submit" class="btn-principal" style="text-decoration: none;">Logout</a>
-    <br> 
     <hr>
-    
-    <a href="{% url 'listar_pets' %}" type="submit" class="btn-principal" style="text-decoration: none;">Adotar Novo Pet</a>
-    <br> 
-    <a href="{% url 'pets_adotados' %}" type="submit" class="btn-principal" style="text-decoration: none;">Pets Adotados</a>
-    <br> 
-    <hr>
+    {% endif %}
 
-    <a href="{% url 'nova_raca' %}" type="submit" class="btn-principal" style="text-decoration: none;">Cadastrar nova Raça</a>
-    <br>
-    <hr>
-    
-    <a href="{% url 'novo_pet' %}" type="submit" class="btn-principal" style="text-decoration: none;">Divulgar Novo Pet</a>
-    <br> 
-    
-    <a href="{% url 'seus_pets' %}" type="submit" class="btn-principal" style="text-decoration: none;">Seus pets</a>
-    <br> 
-    
-    <a href="{% url 'ver_pedido_adocao' %}" type="submit" class="btn-principal" style="text-decoration: none;">Ver pedidos de Adoção</a>
-    <br> 
-    
-    <a href="{% url 'dashboard' %}" type="submit" class="btn-principal" style="text-decoration: none;">Dashboard adoção</a>
-    <br>
-    <hr>
+    {% if user.is_authenticated %}
+        <a href="{% url 'sair' %}" type="submit" class="btn-principal" style="text-decoration: none;">Logout</a>
+        <br> 
+        <hr>
+        
+        <a href="{% url 'listar_pets' %}" type="submit" class="btn-principal" style="text-decoration: none;">Adotar Novo Pet</a>
+        <br> 
+        <a href="{% url 'pets_adotados' %}" type="submit" class="btn-principal" style="text-decoration: none;">Pets Adotados</a>
+        <br> 
+        <hr>
 
+        <a href="{% url 'nova_raca' %}" type="submit" class="btn-principal" style="text-decoration: none;">Cadastrar nova Raça</a>
+        <br>
+        <hr>
+        
+        <a href="{% url 'novo_pet' %}" type="submit" class="btn-principal" style="text-decoration: none;">Divulgar Novo Pet</a>
+        <br> 
+        
+        <a href="{% url 'seus_pets' %}" type="submit" class="btn-principal" style="text-decoration: none;">Seus pets</a>
+        <br> 
+        
+        <a href="{% url 'ver_pedido_adocao' %}" type="submit" class="btn-principal" style="text-decoration: none;">Ver pedidos de Adoção</a>
+        <br> 
+        
+        <a href="{% url 'dashboard' %}" type="submit" class="btn-principal" style="text-decoration: none;">Dashboard adoção</a>
+        <br>
+        <hr>
+    {% endif %}
 </div>
