@@ -8,6 +8,7 @@
     <hr style="border-color: #7E7B7C">
 
     <div style="text-align: center;">
+        {% if user.is_authenticated == False %}
         <label>Login: </label>
         <a href="{% url 'login' %}" type="submit" class="btn-principal" style="text-decoration: none;">Login</a>
         <br> 
@@ -16,6 +17,7 @@
         <a href="{% url 'cadastro' %}" type="submit" class="btn-principal" style="text-decoration: none;">Cadastro</a>
         <br>    
         <br>  
+        {% endif %}
         {% if user.is_authenticated %}
         <label>Logout: </label>
         <a href="{% url 'logout' %}" type="submit" class="btn-principal" style="text-decoration: none;">Logout</a>
@@ -27,6 +29,10 @@
         <br> 
         <label>Gerenciar Evento: </label>
         <a href="{% url 'gerenciar_evento' %}" type="submit" class="btn-principal" style="text-decoration: none;">Gerenciar Evento</a>
+        <br>
+        <br>
+        <label>Certificados: </label>
+        <a href="{% url 'meus_certificados' %}" type="submit" class="btn-principal" style="text-decoration: none;">Meus Certificados</a>
         <br>
         <br>
         {% endif %}
