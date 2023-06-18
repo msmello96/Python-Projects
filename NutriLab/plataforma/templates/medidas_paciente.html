@@ -1,0 +1,184 @@
+{% extends 'base_plataforma.html' %}
+{% load static %}
+
+{% block 'plataforma' %}
+
+    {% if messages %}
+        <br>
+        {% for message in messages %}
+            <div class="alert {{message.tags}}">
+                {{message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <br>
+
+    <div class="row">
+
+        <div class="col-md-3">
+            {% if paciente.sexo == "M"%}
+                <img src="{% static 'plataforma/img/perfil2.png' %}">
+            {% else %}
+                <img src="{% static 'plataforma/img/perfil1.png' %}">
+            {% endif %}
+        </div>
+
+        <div class="col-md-3 dados descricao">
+            <h4>{{paciente.nome}}</h4>
+            <h6>{{paciente.idade}}</h6>
+        </div>
+        
+    </div>
+    <hr>
+
+
+    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal">
+        Adicionar medidas do paciente
+    </button>
+    
+    <a href="{% url 'dados_paciente' paciente.id %}">
+        <button type="button" class="btn btn-outline-success">
+            Dados do paciente 
+        </button>
+    </a>
+
+    <br>
+    <br>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+            <th scope="col">Data</th>
+            <th scope="col">Torax</th>
+            <th scope="col">Abdomen</th>
+            <th scope="col">Cintura</th>
+            <th scope="col">Coxa</th>
+            <th scope="col">Braço Relaxado</th>
+            <th scope="col">Braço Contraido</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dado in medidas_paciente %}
+                <tr>
+                    <th scope="row">{{dado.data}}</th>
+                    <td>{{dado.torax}} cm</td>
+                    <td>{{dado.abdomen}} cm</td>
+                    <td>{{dado.cintura}} cm</td>
+                    <td>{{dado.coxa}} cm</td>
+                    <td>{{dado.braco_relaxado}} cm</td>
+                    <td>{{dado.braco_contraido}} cm</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <form action="{% url 'medidas_paciente' paciente.id %}" method="POST">{% csrf_token %}
+                        <h4 class="titulo">Medidas do paciente</h4>
+                        <div class="form-row">
+                            <div class='col-md'>
+                            
+                                    <label for="validationServerUsername">Torax</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="--" name="torax">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                        </div>
+                                    </div>
+                                                            
+                            </div>
+
+                            <div class='col-md'>
+                            
+                                    <label for="validationServerUsername">Abdomen</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="--" name="abdomen">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                        </div>
+                                    </div>
+                                                            
+                            </div>
+
+                            
+                        </div>
+                        <br>
+                        <div class="form-row">
+                            <div class='col-md'>
+                            
+                                    <label for="validationServerUsername">Cintura</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="--" name="cintura">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                        </div>
+                                    </div>
+                                                            
+                            </div>
+
+                            <div class='col-md'>
+                            
+                                    <label for="validationServerUsername">Coxa</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="--" name="coxa">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                        </div>
+                                    </div>
+                                                            
+                            </div>
+
+                            
+                        </div>
+                        <br>
+                        <div class="form-row">
+                            <div class='col-md'>
+                            
+                                    <label for="validationServerUsername">Braço relaxado</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="--" name="braco_relaxado">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                        </div>
+                                    </div>
+                                                            
+                            </div>
+
+                            <div class='col-md'>
+                            
+                                    <label for="validationServerUsername">Braço contraido</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="--" name="braco_contraido">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                        </div>
+                                    </div>
+                                                            
+                            </div>
+
+                            
+                        </div>
+
+                        <br>
+                        <br>
+
+                        <input type="submit" value="Cadastrar" class="btn btn-success">
+
+                    </form>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+
+        
+{% endblock%}
