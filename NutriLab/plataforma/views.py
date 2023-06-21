@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, FileResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages import constants
@@ -11,7 +11,6 @@ from reportlab.lib.pagesizes import A4
 from datetime import time
 import os
 from django.conf import settings
-
 
 
 @login_required(login_url='/auth/logar/')
@@ -81,7 +80,7 @@ def dados_paciente(request, id):
         return redirect('/dados_paciente/')
     
     if request.method == "GET":
-        dados_paciente = DadosPaciente.objects.filter(paciente=paciente)
+        dados_paciente = DadosPaciente.objects.filter(paciente=paciente).order_by("-data")
         return render(request, 'dados_paciente.html', {'paciente': paciente, 'dados_paciente': dados_paciente})
     elif request.method == "POST":
         peso = request.POST.get('peso')
@@ -138,7 +137,7 @@ def medidas_paciente(request, id):
         return redirect('/medidas_paciente/')
     
     if request.method == "GET":
-        medidas_paciente = MedidasPaciente.objects.filter(paciente=paciente)
+        medidas_paciente = MedidasPaciente.objects.filter(paciente=paciente).order_by("-data")
         return render(request, 'medidas_paciente.html', {'paciente': paciente, 'medidas_paciente': medidas_paciente})
     elif request.method == "POST":
         torax = request.POST.get('torax')
@@ -179,7 +178,8 @@ def grafico_peso(request, id):
     dados = DadosPaciente.objects.filter(paciente=paciente).order_by("data")
     
     pesos = [dado.peso for dado in dados]
-    labels = list(range(len(pesos)))
+    # labels = list(range(len(pesos)))
+    labels = [dado.data.strftime("%d-%m-%Y") for dado in dados]
     data = {'peso': pesos,
             'labels': labels}
     return JsonResponse(data)
@@ -191,8 +191,8 @@ def grafico_gordura(request, id):
     dados = DadosPaciente.objects.filter(paciente=paciente).order_by("data")
     
     gorduras = [dado.percentual_gordura for dado in dados]
-    labels = list(range(len(gorduras)))
-    # labels = [dado.data for dado in dados]
+    # labels = list(range(len(gorduras)))
+    labels = [dado.data.strftime("%d-%m-%Y") for dado in dados]
     data = {'gordura': gorduras,
             'labels': labels}
     return JsonResponse(data)
@@ -204,8 +204,8 @@ def grafico_musculo(request, id):
     dados = DadosPaciente.objects.filter(paciente=paciente).order_by("data")
     
     musculo = [dado.percentual_musculo for dado in dados]
-    labels = list(range(len(musculo)))
-    # labels = [dado.data for dado in dados]
+    # labels = list(range(len(musculo)))
+    labels = [dado.data.strftime("%d-%m-%Y") for dado in dados]
     data = {'musculo': musculo,
             'labels': labels}
     return JsonResponse(data)
@@ -263,6 +263,8 @@ def opcao(request, id_paciente):
         imagem = request.FILES.get('imagem')
         descricao = request.POST.get("descricao")
 
+        descricao = descricao.strip()
+        
         o1 = Opcao(refeicao_id=id_refeicao,
                    imagem=imagem,
                    descricao=descricao)
@@ -278,7 +280,11 @@ def mm2p(milimetros):
 def exportar_refeicao(request, id_paciente):
     paciente = get_object_or_404(Pacientes, id=id_paciente)
     refeicao = Refeicao.objects.filter(paciente=paciente).order_by("horario")
-    opcao = Opcao.objects.all()
+    query = f'select o.id, o.descricao from plataforma_refeicao r, plataforma_pacientes p, plataforma_opcao o where p.id = r.paciente_id and o.refeicao_id = r.id and r.paciente_id = {id_paciente}'
+    opcao = Opcao.objects.raw(query)
+
+    # select o.descricao from plataforma_refeicao r, plataforma_pacientes p, plataforma_opcao o where p.id = r.paciente_id and o.refeicao_id = r.id and r.paciente_id = 1
+
     data = datetime.now()
     data = data.strftime("%d-%m-%Y")
     
@@ -301,14 +307,14 @@ def exportar_refeicao(request, id_paciente):
             cnv.drawString(mm2p(10), mm2p(eixo_y), ref_comp)
             eixo_y -= 10
             for opt in opcao:
-                cnv.drawString(mm2p(20), mm2p(eixo_y), opt.descricao)
-                eixo_y -= 10
+                if opt.refeicao_id == ref.id:
+                    cnv.drawString(mm2p(20), mm2p(eixo_y), opt.descricao)
+                    eixo_y -= 10
             eixo_y -= 10
-        
         
         cnv.save()
 
+        response = FileResponse(open(f"media/dietas/{id_paciente}_{paciente.nome}.pdf", "rb"))
         
-        messages.add_message(request, constants.SUCCESS, 'PDF gerado com sucesso.')
-        return redirect(f'/plano_alimentar/{id_paciente}')
+        return response
 

@@ -17,7 +17,7 @@ class Pacientes(models.Model):
     
 class DadosPaciente(models.Model):
     paciente = models.ForeignKey(Pacientes, on_delete=models.CASCADE)
-    data = models.DateTimeField()
+    data = models.DateField()
     peso = models.IntegerField()
     altura = models.IntegerField()
     percentual_gordura = models.IntegerField()
@@ -33,7 +33,7 @@ class DadosPaciente(models.Model):
 
 class MedidasPaciente(models.Model):
     paciente = models.ForeignKey(Pacientes, on_delete=models.CASCADE)
-    data = models.DateTimeField()
+    data = models.DateField()
     torax = models.IntegerField()
     braco_relaxado = models.IntegerField()
     braco_contraido = models.IntegerField()

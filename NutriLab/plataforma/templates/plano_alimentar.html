@@ -37,8 +37,8 @@
     </button>
 
 
-    <a href="{% url 'exportar_refeicao' paciente.id %}">
-        <button type="button" class="btn btn-outline-primary">
+    <a href="{% url 'exportar_refeicao' paciente.id %}" download>
+        <button type="button" class="btn btn-outline-primary" >
             Exportar refeição
         </button>
     </a>
@@ -50,18 +50,22 @@
             <div class="refeicao">
                 <div class="head-refeicao">
                     <span>{{re.titulo}}</span>
-
                     <span style="float: right;">{{re.horario}}h</span>
 
                 </div>
 
                 <div class="body-refeicao">
+                    <p>Macronutrientes - Carboidratos: {{re.carboidratos}} | Proteinas: {{re.proteinas}} | Gorduras: {{re.gorduras}}</p>
                     {% for opt in opcao %}
                         {% if opt.refeicao == re %}
                             <div class="opcao">
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <img width="100%" src="{{opt.imagem.url}}"> 
+                                        {% if opt.imagem %}
+                                            <img width="100%" src="{{opt.imagem.url}}">
+                                        {% else %}
+                                            <img width="100%" src="{% static 'plataforma/img/ref_padrao.png' %}">     
+                                        {% endif %}
                                     </div>
 
                                     <div class="col-md-10">
@@ -178,9 +182,7 @@
 
                                 <label for="validationServerUsername">Descrição</label>
                                 <div class="input-group">
-                                    <textarea class="form-control" name='descricao'>
-
-                                    </textarea>
+                                    <textarea class="form-control" name='descricao'></textarea>
                                 </div>
                                 <br>
                                 <input type="submit" value="Cadastrar" class="btn btn-success">
