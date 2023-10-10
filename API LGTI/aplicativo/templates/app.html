@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'aplicativo/css/style.css' %}">
+{% endblock %}
+{% block 'body' %}
+
+<div class="box">
+    <form action="{% url 'home' %}" method="POST"> {% csrf_token %}
+        <h1 class="titulo font-degrade borda-bottom-degrade">Ajuste Telefonia</h2>
+        <br>
+        <span class="span-descricao">12x36:</span>
+        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal1">
+            Alterar
+        </button>
+        <br>
+        <br>
+        <span class="span-descricao">Plantonista N1:</span>
+        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal2">
+            Alterar
+        </button>
+        <br>
+        <br>
+        <span class="span-descricao">Plantonista N2:</span>
+        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal3">
+            Alterar
+        </button>
+        <br>
+        <br>
+
+    </form>
+    {% if messages %}
+        <br>
+        {% for message in messages %}
+            <div class="alert {{message.tags}}">
+                {{message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<!-- Modal 12x36-->
+<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Atendimento 12x36</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <form action="{% url 'home' %}" method="POST">{% csrf_token %}
+                <div class="modal-body">
+                    <span class="span-descricao">Numero</span>
+                    <input type="number" placeholder="Somente numeros, exemplo: 016912341234" class="form-control input-cadastro" name="usuario1">
+                    <br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" value="Alterar" class="btn btn-success btn-md">
+                </div>
+            </form>
+        </div>
+     </div>
+  </div>
+
+<!-- Modal Plantonista N1-->
+<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Plantonista N1</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <form action="{% url 'home' %}" method="POST">{% csrf_token %}
+                <div class="modal-body">
+                    <span class="span-descricao">Numero</span>
+                    <input type="number" placeholder="Somente numeros, exemplo: 016912341234" class="form-control input-cadastro" name="usuario2">
+                    <br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" value="Alterar" class="btn btn-success btn-md">
+                </div>
+            </form>
+        </div>
+     </div>
+  </div>
+
+<!-- Modal Plantonista N2-->
+<div class="modal fade" id="modal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Plantonista N2</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <form action="{% url 'home' %}" method="POST">{% csrf_token %}
+                <div class="modal-body">
+                    <span class="span-descricao">Numero</span>
+                    <input type="number" placeholder="Somente numeros, exemplo: 016912341234" class="form-control input-cadastro" name="usuario3">
+                    <br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" value="Alterar" class="btn btn-success btn-md">
+                </div>
+            </form>
+        </div>
+     </div>
+  </div>
+
+{% endblock %}
