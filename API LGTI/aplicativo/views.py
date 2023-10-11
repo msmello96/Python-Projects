@@ -18,17 +18,27 @@ def home(request):
         usuario3 = request.POST.get("usuario3")
         
         if usuario1:
-            user_id = 273
-            updateMedia(usuario1, user_id)
-            messages.add_message(request, constants.SUCCESS, 'Telefone 12x36 alterado com sucesso.')
+            if usuario1.isnumeric():
+                user_id = 273
+                updateMedia(usuario1, user_id)
+                messages.add_message(request, constants.SUCCESS, 'Telefone 12x36 alterado com sucesso.')
+                return redirect('/home/app/')
+            else:
+                messages.add_message(request, constants.ERROR, 'Digite um número de telefone válido.')
         elif usuario2:
-            user_id = 311
-            updateMedia(usuario2, user_id)
-            messages.add_message(request, constants.SUCCESS, 'Telefone Plantonista N1 alterado com sucesso.')
+            if usuario2.isnumeric():
+                user_id = 311
+                updateMedia(usuario2, user_id)
+                messages.add_message(request, constants.SUCCESS, 'Telefone Plantonista N1 alterado com sucesso.')
+            else:
+                messages.add_message(request, constants.ERROR, 'Digite um número de telefone válido.')
         elif usuario3:
-            user_id = 311
-            updateMedia(usuario2, user_id)
-            messages.add_message(request, constants.SUCCESS, 'Telefone Plantonista N2 alterado com sucesso.')
+            if usuario3.is_numeric():
+                user_id = 311
+                updateMedia(usuario2, user_id)
+                messages.add_message(request, constants.SUCCESS, 'Telefone Plantonista N2 alterado com sucesso.')
+            else:
+                messages.add_message(request, constants.ERROR, 'Digite um número de telefone válido.')
         else:
             messages.add_message(request, constants.ERROR, 'Erro interno do sistema, contate pessoal responsável.')
             return redirect('/home/app/')

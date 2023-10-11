@@ -32,7 +32,7 @@
     {% if messages %}
         <br>
         {% for message in messages %}
-            <div class="alert {{message.tags}}">
+            <div class="alert {{message.tags}}" id="08193">
                 {{message}}
             </div>
         {% endfor %}
@@ -113,5 +113,18 @@
         </div>
      </div>
   </div>
+  
+  
+  <script>
+    // Função para ocultar os elementos com a classe "alert"
+function hideAlerts() {
+    // Seleciona todos os elementos com a classe "alert"
+    $(".alert").css("display", "none");
+  }
+  
+  // Inicializa o script
+  setInterval(hideAlerts, 10000);
+
+  </script>
 
 {% endblock %}
