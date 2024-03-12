@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'head' %}
+    <link rel="shortcut icon" type="imagex/png" href="{% static 'aplicativo/img/logolgti.ico' %}">
+    <link rel="stylesheet" href="{% static 'home/css/home.css' %}">
+    <title>Zabbix Telefonia</title>
+{% endblock %}
+
+{% block 'titulo' %}Cadastre-se{% endblock %}
+
+{% block 'body' %}
+    <div class="container-fluid">
+        
+        <div class="row">
+            <!--
+            <div class="col-md-3 sidebar">
+                <div class="logo_sidebar">
+                    
+                    <h2 class="logo">
+                         <img class="img_logo_sidebar" src="{% static 'home/img/logolgti.ico' %}"> 
+                    </h2>
+
+                </div>
+            </div> -->
+
+        <div class="box">
+                    <div class="area_cadastrar">
+
+                        <p class="sub-titulo">Entre com sua conta</p>
+                        <hr>
+                        
+                        <form action="{% url 'logar' %}" method="POST">{% csrf_token %}
+                            <span class="bold">Usuário</span>
+                            <input class="form-control input-form" name="usuario" type="text" placeholder="Digite seu usuario">
+                            <br>
+                            <span class="bold">Senha</span>
+                            <input class="form-control input-form" name="senha" type="password" placeholder="Digite sua senha">
+                            <br>
+                            <button class="btn btn-outline-secondary" style="color: white; border-color: rgb(255, 0, 133); float: right">Logar</button>
+                            <br>
+                            <br>
+                            <br>
+                            {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {{message.tags}}">
+                                    {{message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        </form>
+                        
+
+                        
+                    </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <script>
+        // Função para ocultar os elementos com a classe "alert"
+    function hideAlerts() {
+        // Seleciona todos os elementos com a classe "alert"
+        $(".alert").css("display", "none");
+      }
+      
+      // Inicializa o script
+      setInterval(hideAlerts, 10000);
+    
+      </script>
+
+{% endblock %}

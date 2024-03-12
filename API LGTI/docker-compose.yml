@@ -1,8 +1,75 @@
-version: '3.8'
+version: "3.7"
+
+networks:
+  frontend:
 
 services:
-  web:
-    build: .
-    command: python3 manage.py runserver 0.0.0.0:8000
-    ports: 
+####REVERSE_PROXY
+  traefik:
+    image: traefik:v2.9.6
+    deploy:
+      resources:
+          limits:
+            memory: 2048M
+          reservations:
+            memory: 512M
+      placement:
+        constraints:
+          - node.role == manager
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - frontend
+    ports:
       - 8000:8000
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certificates:/letsencrypt
+        #- /home/zabbix/traefik/conf/tls.yml:/tls.yml
+    command:
+      - "--api=true"
+      - "--api.debug=true"
+      - "--api.dashboard=true"
+        #- "--log.level=DEBUG"
+        #- "--api.insecure=true"
+      - "--providers.docker.swarmMode=true"
+      - "--providers.docker.endpoint=unix:///var/run/docker.sock"
+      - "--providers.docker.exposedbydefault=false"
+        #- "--providers.file.filename=/tls.yml"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      # Certificate letsencrypt
+      - "--certificatesresolvers.letsencryptresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.letsencryptresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencryptresolver.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencryptresolver.acme.email=andre.bello@proitmonitors.com"
+      - "--certificatesresolvers.letsencryptresolver.acme.storage=/letsencrypt/acme.json"
+
+
+  web:
+    image: aplicacao-telefonia-v1
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=frontend"
+        - "traefik.http.routers.web.rule=Host(`zabbixtelefonia.intradash.com.br`)"
+        - "traefik.http.services.web.loadbalancer.server.port=8000"
+        - "traefik.http.routers.web.entrypoints=websecure"
+        - "traefik.http.routers.web.tls.certresolver=letsencryptresolver"
+        - "traefik.http.routers.web.tls=true"
+    volumes:
+      - db:/automacao/telefonia
+    networks:
+      - frontend
+##Persistencia de Dados
+volumes:
+  db:
+  certificates:

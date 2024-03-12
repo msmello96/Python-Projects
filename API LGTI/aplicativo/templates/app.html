@@ -1,33 +1,40 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block 'head' %}
+<link rel="shortcut icon" type="imagex/png" href="{% static 'aplicativo/img/logolgti.ico' %}">
 <link rel="stylesheet" href="{% static 'aplicativo/css/style.css' %}">
+<title>Zabbix Telefonia</title>
 {% endblock %}
 {% block 'body' %}
 
+<div class="foto">
+    <img type="imagex/png" style="width: 50%;" src="{% static 'aplicativo/img/01_Logotipo_LGTI-1.png' %}">
+</div>
+
+
 <div class="box">
-    <form action="{% url 'home' %}" method="POST"> {% csrf_token %}
+    <form action="{% url 'alteracao' %}" method="POST"> {% csrf_token %}
         <h1 class="titulo font-degrade borda-bottom-degrade">Ajuste Telefonia</h2>
         <br>
-        <span class="span-descricao">12x36:</span>
-        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal1">
+        <span class="span-descricao">Atendente 12x36:</span>
+        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal1" style="color: white; border-color: rgb(255, 0, 133);">
             Alterar
         </button>
         <br>
         <br>
-        <span class="span-descricao">Plantonista N1:</span>
-        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal2">
+        <span class="span-descricao">&nbsp Plantonista N1:&nbsp&nbsp</span>
+        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal2" style="color: white; border-color: rgb(255, 0, 133);">
             Alterar
         </button>
         <br>
         <br>
-        <span class="span-descricao">Plantonista N2:</span>
-        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal3">
+        <span class="span-descricao">&nbsp Plantonista N2:&nbsp&nbsp</span>
+        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal3" style="color: white; border-color: rgb(255, 0, 133);">
             Alterar
         </button>
         <br>
         <br>
-
+        <a class="btn btn-outline-secondary" style="color: white; border-color: rgb(255, 0, 133);" href="{% url 'sair' %}" style="text-align: right;">Logout</a>
     </form>
     {% if messages %}
         <br>
@@ -39,6 +46,7 @@
     {% endif %}
 </div>
 
+
 <!-- Modal 12x36-->
 <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -49,14 +57,15 @@
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
-            <form action="{% url 'home' %}" method="POST">{% csrf_token %}
+            <form action="{% url 'alteracao' %}" method="POST">{% csrf_token %}
                 <div class="modal-body">
                     <span class="span-descricao">Numero</span>
-                    <input type="number" placeholder="Somente numeros, exemplo: 016912341234" class="form-control input-cadastro" name="usuario1">
+                    <input type="number" placeholder="Somente numeros, exemplo: 016912341234" class="form-control input-cadastro" name="usuario1" oninput="limitInputLength(this)" maxlength = "12">
                     <br>
+                    <p class="sub-titulo">Depois de clicar em alterar, demora em torno de 5 a 10 segundos para realizar todas as alterações em todos os ambientes, somente aguardar mensagem de confirmação.</p>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     <input type="submit" value="Alterar" class="btn btn-success btn-md">
                 </div>
             </form>
@@ -74,14 +83,15 @@
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
-            <form action="{% url 'home' %}" method="POST">{% csrf_token %}
+            <form action="{% url 'alteracao' %}" method="POST">{% csrf_token %}
                 <div class="modal-body">
                     <span class="span-descricao">Numero</span>
-                    <input type="number" placeholder="Somente numeros, exemplo: 016912341234" class="form-control input-cadastro" name="usuario2">
+                    <input type="number" placeholder="Somente numeros, exemplo: 016912341234" maxlength="12" class="form-control input-cadastro" name="usuario2" oninput="limitInputLength(this)" maxlength = "12">
                     <br>
+                    <p class="sub-titulo">Depois de clicar em alterar, demora em torno de 5 a 10 segundos para realizar todas as alterações em todos os ambientes, somente aguardar mensagem de confirmação.</p>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     <input type="submit" value="Alterar" class="btn btn-success btn-md">
                 </div>
             </form>
@@ -99,15 +109,16 @@
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
-            <form action="{% url 'home' %}" method="POST">{% csrf_token %}
+            <form action="{% url 'alteracao' %}" method="POST">{% csrf_token %}
                 <div class="modal-body">
                     <span class="span-descricao">Numero</span>
-                    <input type="number" placeholder="Somente numeros, exemplo: 016912341234" class="form-control input-cadastro" name="usuario3">
+                    <input type="number" placeholder="Somente numeros, exemplo: 016912341234" class="form-control input-cadastro" name="usuario3" oninput="limitInputLength(this)" maxlength = "12">
                     <br>
+                    <p class="sub-titulo">Depois de clicar em alterar, demora em torno de 5 a 10 segundos para realizar todas as alterações em todos os ambientes, somente aguardar mensagem de confirmação.</p>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" value="Alterar" class="btn btn-success btn-md">
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <input type="submit" value="Alterar" class="btn btn-success btn-md" >
                 </div>
             </form>
         </div>
@@ -116,15 +127,20 @@
   
   
   <script>
-    // Função para ocultar os elementos com a classe "alert"
-function hideAlerts() {
-    // Seleciona todos os elementos com a classe "alert"
-    $(".alert").css("display", "none");
-  }
-  
-  // Inicializa o script
-  setInterval(hideAlerts, 10000);
+        // Função para ocultar os elementos com a classe "alert"
+        function hideAlerts() {
+            // Seleciona todos os elementos com a classe "alert"
+            $(".alert").css("display", "none");
+        }
+        
+        // Inicializa o script
+        setInterval(hideAlerts, 10000);
 
-  </script>
+        function limitInputLength(element) {
+            if (element.value.length > element.maxLength) {
+              element.value = element.value.slice(0, element.maxLength);
+            }
+          }
+    </script>
 
 {% endblock %}

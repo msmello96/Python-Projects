@@ -1,0 +1,13 @@
+/home/msmello/apilgti.db
+
+sudo apt-get install -y docker.io
+
+python3-pip python3.8 python3.8-dev python3.8-venv gcc default-libmysqlclient-dev libssl-dev curl
+
+
+docker build -t apilgti .
+docker tag lgti-apptelefonia-v1 msmello96/lgti-apptelefonia-v1
+docker push msmello96/lgti-apptelefonia-v1
+docker stack deploy -c docker-compose.yml lgtiweb
+docker service ls
+
