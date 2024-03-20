@@ -1,7 +1,27 @@
-{% if messages %}
-    {% for message in messages %}
-        {{ message }}
-    {% endfor %}
-{% endif %}
+{% extends 'base_templates/authentication_base.html' %}
+{% load static %}
 
-LOGIN
+{% block 'head' %}
+    <link href="{% static 'authentication/css/css.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block 'body' %}
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endif %}
+
+        <div class="box">
+            <form action="{% url 'login' %}" method="POST"> {% csrf_token %}
+                <h2> Logar </h2>
+                <hr>
+                {{ auth_form }}
+                <br>
+                <input type="submit" value="Enviar" class="btn btn-main">
+            </form>
+
+        </div>
+    </div>
+{% endblock %}

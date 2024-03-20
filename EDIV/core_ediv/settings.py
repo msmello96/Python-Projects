@@ -35,6 +35,8 @@ INSTALLED_APPS = [
 
     # MyApps
     'autenticacao',
+    'services',
+    'tinymce',
 ]
 
 MIDDLEWARE = [
